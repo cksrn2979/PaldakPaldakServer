@@ -3,6 +3,7 @@ package com.example.changoo.model;
 public class User {
 	String id;
 	String password;
+	String name;
 
 	public User() {
 		super();
@@ -12,6 +13,14 @@ public class User {
 		super();
 		this.id = id;
 		this.password = password;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	public String getId() {
