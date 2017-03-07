@@ -15,11 +15,14 @@
 	// root, password 본인것으로 바꾸기</br></br>
 	
 	</br></br>
+	Default ID Password = {1,1}
+	</br></br>
+	</br></br>
 	
 	
 	// 1. MySQL 실행</br></br>
 	
-	// 2. MySQL에 smartfishig 스키마 생성</br></br>
+	// 2. MySQL에 smartfishing 스키마 생성</br></br>
 		
 	// 3. 메뉴바 Server 클릭</br></br>
 	
