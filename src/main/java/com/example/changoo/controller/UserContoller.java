@@ -12,7 +12,7 @@ import com.example.changoo.model.User;
 import com.example.changoo.service.UserService;
 
 @Controller
-public class LoginContoller {
+public class UserContoller {
 
 	private UserService userService;
 
@@ -21,34 +21,34 @@ public class LoginContoller {
 		this.userService = userService;
 	}
 
-	@RequestMapping(value = "/Login", method = { RequestMethod.GET, RequestMethod.POST })
+	@RequestMapping(value = "/login", method = { RequestMethod.GET, RequestMethod.POST })
 	public String login(Model model, User user) {
 
 		String id = user.getId();
 		String password = user.getPassword();
 
 		/**
-		 * CHECKING Data base///////////////////// OK == FIND USER SUCCESS NOK
-		 * == FIND USER FAIL
+		 * CHECKING Data base///////////////////// OK == FIND USER SUCCESS 
+		 * NOK== FIND USER FAIL
 		 */
 
-		JSONObject jObject = new JSONObject();
+		JSONObject message = new JSONObject();
 
 		User userFromDB = userService.getUser(id);
 		if (userFromDB == null)
-			jObject.put(Protocol.CHECKING_USER, Protocol.USER_NOK);
+			message.put(Protocol.CHECKING_USER, Protocol.USER_NOK);
 
 		else {
 			if (userFromDB.getPassword().equals(password) == true)
-				jObject.put(Protocol.CHECKING_USER, Protocol.USER_OK);
+				message.put(Protocol.CHECKING_USER, Protocol.USER_OK);
 			else
-				jObject.put(Protocol.CHECKING_USER, Protocol.USER_NOK);
+				message.put(Protocol.CHECKING_USER, Protocol.USER_NOK);
 		}
 
 		///////////////////////////////////////////////////////////
 
-		model.addAttribute("jObject", jObject);
-		
+		model.addAttribute("message", message);
+
 		return "login";
 	}
 }

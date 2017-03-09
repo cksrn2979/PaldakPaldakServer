@@ -1,1 +1,1 @@
-${jObject}
+${message}
