@@ -24,7 +24,7 @@ public class FishDAO {
 	}
 
 	public List<Fish> getFishsByID(String user_id) {
-		String str = "select * from fishs where user_id=?";
+		String str = "select * from fishs where user_id=? order by 이름 ASC";
 		try {
 			return jdbcTemplate.query(str, new Object[] { user_id }, new FishMapper());
 		} catch (EmptyResultDataAccessException e) {
