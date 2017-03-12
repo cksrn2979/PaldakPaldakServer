@@ -21,11 +21,13 @@ public class UserContoller {
 		this.userService = userService;
 	}
 
-	@RequestMapping(value = "/login", method = { RequestMethod.GET, RequestMethod.POST })
+	@RequestMapping(value = "/login", method = {RequestMethod.POST })
 	public String login(Model model, User user) {
 
 		String id = user.getId();
 		String password = user.getPassword();
+		
+		System.out.println("ID" + id + " PW "  +password);
 
 		/**
 		 * CHECKING Data base///////////////////// OK == FIND USER SUCCESS 
