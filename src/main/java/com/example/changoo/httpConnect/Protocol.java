@@ -8,4 +8,6 @@ public class Protocol {
     public static final String CHECKING_USER="CHECKING_USER";
     public static final String USER_OK="USER_OK";
     public static final String USER_NOK="USER_NOK";
+    public static final String JOIN_OK="JOIN_OK";
+    public static final String JOIN_NOK="JOIN_NOK";
 }
