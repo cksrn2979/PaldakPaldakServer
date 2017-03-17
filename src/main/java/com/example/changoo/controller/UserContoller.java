@@ -21,7 +21,7 @@ public class UserContoller {
 		this.userService = userService;
 	}
 
-	@RequestMapping(value = "/login", method = {RequestMethod.POST })
+	@RequestMapping(value = "/login",method = {RequestMethod.POST })
 	public String login(Model model, User user) {
 
 		String id = user.getId();
@@ -52,5 +52,40 @@ public class UserContoller {
 		model.addAttribute("message", message);
 
 		return "login";
+	}
+	
+	@RequestMapping(value = "/join",method = { RequestMethod.GET, RequestMethod.POST })
+	public String join(Model model,User user) {
+		
+		String id = user.getId();
+		String password = user.getPassword();
+		String name = user.getName();
+		
+		System.out.println("ID" + id + " PW "  +password + " NAME " + name);
+		
+		/**
+		 * CHECKING Data base///////////////////// OK == FIND USER SUCCESS 
+		 * NOK== FIND USER FAIL
+		 */
+
+		JSONObject message = new JSONObject();
+
+		//User userFromDB = userService.getUser(id);
+		//if (userFromDB == null)
+		//	message.put(Protocol.CHECKING_USER, Protocol.USER_NOK);
+
+		//else {
+		//	if (userFromDB.getPassword().equals(password) == true)
+				message.put(Protocol.CHECKING_USER, Protocol.JOIN_OK);
+		//	else
+		//		message.put(Protocol.CHECKING_USER, Protocol.USER_NOK);
+		//}
+
+		///////////////////////////////////////////////////////////
+
+		model.addAttribute("message", message);
+
+		return "login";
+
 	}
 }

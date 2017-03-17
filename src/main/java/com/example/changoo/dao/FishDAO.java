@@ -7,7 +7,8 @@ import java.util.List;
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.dao.DataAccessException;
+import org.springframework.jdbc.InvalidResultSetAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
@@ -24,12 +25,10 @@ public class FishDAO {
 	}
 
 	public List<Fish> getFishsByID(String user_id) {
+
 		String str = "select * from fishs where user_id=? order by 이름 ASC";
-		try {
-			return jdbcTemplate.query(str, new Object[] { user_id }, new FishMapper());
-		} catch (EmptyResultDataAccessException e) {
-			return null;
-		}
+		return jdbcTemplate.query(str, new Object[] { user_id }, new FishMapper());
+
 	}
 
 	class FishMapper implements RowMapper<Fish> {
