@@ -9,7 +9,7 @@ public class Fish {
 	String species;
 	String imgLocation;
 	double maxFower;
-	double agvFower;
+	double avgFower;
 	double weight;
 	String date;
 	double time;
@@ -20,7 +20,7 @@ public class Fish {
 	}
 
 	public Fish(String id, String user_id, String name, String species, String imgLocation, double maxFower,
-			double agvFower, double weight, String date, double time, String GPS) {
+			double avgFower, double weight, String date, double time, String GPS) {
 		super();
 		this.id = id;
 		this.user_id = user_id;
@@ -28,7 +28,7 @@ public class Fish {
 		this.species = species;
 		this.imgLocation = imgLocation;
 		this.maxFower = maxFower;
-		this.agvFower = agvFower;
+		this.avgFower = avgFower;
 		this.weight = weight;
 		this.date = date;
 		this.time = time;
@@ -88,12 +88,12 @@ public class Fish {
 		this.maxFower = maxFower;
 	}
 
-	public double getAgvFower() {
-		return agvFower;
+	public double getAvgFower() {
+		return avgFower;
 	}
 
-	public void setAgvFower(double agvFower) {
-		this.agvFower = agvFower;
+	public void setAgvFower(double avgFower) {
+		this.avgFower = avgFower;
 	}
 
 	public double getWeight() {

@@ -26,7 +26,7 @@ public class FishDAO {
 
 	public List<Fish> getFishsByID(String user_id) {
 
-		String str = "select * from fishs where user_id=? order by 이름 ASC";
+		String str = "select * from fishs where user_id=? order by name ASC";
 		return jdbcTemplate.query(str, new Object[] { user_id }, new FishMapper());
 
 	}
@@ -37,15 +37,17 @@ public class FishDAO {
 			Fish fish = new Fish();
 			fish.setId(rs.getString("id"));
 			fish.setUser_id(rs.getString("user_id"));
-			fish.setName(rs.getString("이름"));
-			fish.setSpecies(rs.getString("어종"));
-			fish.setImgLocation(rs.getString("사진경로"));
-			fish.setMaxFower(rs.getDouble("최대값"));
-			fish.setAgvFower(rs.getDouble("평균값"));
-			fish.setWeight(rs.getDouble("무게"));
-			fish.setDate(rs.getString("날짜"));
-			fish.setTime(rs.getDouble("잡은시간"));
-			fish.setGPS(rs.getString("위치"));
+			fish.setName(rs.getString("name"));
+			fish.setSpecies(rs.getString("species"));
+			fish.setImgLocation(rs.getString("imgLocation"));
+			fish.setMaxFower(rs.getDouble("maxFower"));
+			fish.setAgvFower(rs.getDouble("avgFower"));
+			fish.setWeight(rs.getDouble("weight"));
+			fish.setDate(rs.getString("date"));
+			fish.setTime(rs.getDouble("time"));
+			fish.setGPS(rs.getString("GPS"));
+		
+
 			return fish;
 		}
 	}
