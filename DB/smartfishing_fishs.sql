@@ -25,15 +25,17 @@ DROP TABLE IF EXISTS `fishs`;
 CREATE TABLE `fishs` (
   `id` varchar(100) NOT NULL,
   `user_id` varchar(45) NOT NULL,
-  `이름` varchar(100) DEFAULT NULL,
-  `어종` varchar(100) DEFAULT NULL,
-  `사진경로` varchar(200) DEFAULT NULL,
-  `최대값` double(7,3) DEFAULT NULL,
-  `평균값` double(7,3) DEFAULT NULL,
-  `무게` double(7,3) DEFAULT NULL,
-  `날짜` varchar(45) DEFAULT NULL,
-  `잡은시간` double(7,3) DEFAULT NULL,
-  `위치` varchar(300) DEFAULT NULL,
+  `name` varchar(100) DEFAULT NULL,
+  `species` varchar(100) DEFAULT NULL,
+  `imgFile` varchar(200) DEFAULT NULL,
+  `maxFower` double(7,3) DEFAULT NULL,
+  `avgFower` double(7,3) DEFAULT NULL,
+  `weight` double(7,3) DEFAULT NULL,
+  `date` varchar(45) DEFAULT NULL,
+  `time` varchar(45) DEFAULT NULL,
+  `timeing` double(7,3) DEFAULT NULL,
+  `GPS_lat` double(7,3) DEFAULT NULL,
+  `GPS_lot` double(7,3) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `user_id_idx` (`user_id`),
   CONSTRAINT `user_id` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
@@ -46,7 +48,7 @@ CREATE TABLE `fishs` (
 
 LOCK TABLES `fishs` WRITE;
 /*!40000 ALTER TABLE `fishs` DISABLE KEYS */;
-INSERT INTO `fishs` VALUES ('cksrn2979_17030919','cksrn2979','꼬북이','놀래미','cksrn2979_1730919.jpg',10.100,5.000,3.000,'2017/03/09',100.000,'HOME'),('cksrn2979_17030920','cksrn2979','고라파덕','금붕어','cksrn2979_1730920.jpg',10.100,4.000,3.000,'2017/03/09',100.000,'HOME'),('cksrn2979_17030921','cksrn2979','어니부기','니모','cksrn2979_1730921.jpg',4.000,1.120,1.120,'2017/03/09',75.000,'HOME'),('cksrn2979_17030923','cksrn2979','잉어킹','잉어','cksrn2979_1730923.gif',1.120,3.000,4.000,'2017/03/09',42.000,'HOME');
+INSERT INTO `fishs` VALUES ('cksrn2979_20170323104401','cksrn2979','null','null','cksrn2979_20170323104401.jpg',98.871,48.940,-1.000,'2017/03/23','10:44:01',-1.000,37.715,127.049);
 /*!40000 ALTER TABLE `fishs` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -59,4 +61,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-03-10  0:29:38
+-- Dump completed on 2017-03-23 22:45:19
