@@ -7,8 +7,6 @@ import java.util.List;
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataAccessException;
-import org.springframework.jdbc.InvalidResultSetAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
@@ -25,10 +23,29 @@ public class FishDAO {
 	}
 
 	public List<Fish> getFishsByID(String user_id) {
-
 		String str = "select * from fishs where user_id=? order by name ASC";
 		return jdbcTemplate.query(str, new Object[] { user_id }, new FishMapper());
+	}
 
+	public boolean insert(Fish fish) {
+		String sql = "insert into fishs(id,user_id,name,species,imgFile,maxFower,avgFower,weight,date,time,timeing,GPS_lat,Gps_lot)"
+				+ " value (?,?,?,?,?,?,?,?,?,?,?,?,?);";
+		String id = fish.getId();
+		String user_id = fish.getUser_id();
+		String name = fish.getName();
+		String species = fish.getSpecies();
+		String imgFile = fish.getImageFile();
+		Double maxFower = fish.getMaxFower();
+		Double avgFower = fish.getAvgFower();
+		Double weight = fish.getWeight();
+		String date = fish.getDate();
+		String time = fish.getTime();
+		Double timeing = fish.getTimeing();
+		Double GPS_lat = fish.getGPS_lat();
+		Double Gps_lot = fish.getGPS_lot();
+
+		return jdbcTemplate.update(sql, new Object[] { id, user_id, name, species, imgFile, maxFower, avgFower,
+				weight, date, time, timeing, GPS_lat, Gps_lot }) == 1;
 	}
 
 	class FishMapper implements RowMapper<Fish> {
@@ -39,14 +56,15 @@ public class FishDAO {
 			fish.setUser_id(rs.getString("user_id"));
 			fish.setName(rs.getString("name"));
 			fish.setSpecies(rs.getString("species"));
-			fish.setImgLocation(rs.getString("imgLocation"));
+			fish.setImageFile(rs.getString("imgFile"));
 			fish.setMaxFower(rs.getDouble("maxFower"));
-			fish.setAgvFower(rs.getDouble("avgFower"));
+			fish.setAvgFower(rs.getDouble("avgFower"));
 			fish.setWeight(rs.getDouble("weight"));
 			fish.setDate(rs.getString("date"));
-			fish.setTime(rs.getDouble("time"));
-			fish.setGPS(rs.getString("GPS"));
-		
+			fish.setTime(rs.getString("time"));
+			fish.setTimeing(rs.getDouble("timeing"));
+			fish.setGPS_lat(rs.getDouble("GPS_lat"));
+			fish.setGPS_lat(rs.getDouble("GPS_lot"));
 
 			return fish;
 		}

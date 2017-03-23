@@ -3,43 +3,21 @@ package com.example.changoo.model;
 import com.google.gson.Gson;
 
 public class Fish {
-	String id;
-	String user_id;
-	String name;
-	String species;
-	String imgLocation;
-	double maxFower;
-	double avgFower;
-	double weight;
-	String date;
-	double time;
-	String GPS;
+	private String id;
+	private String user_id;
+	private String name;
+	private String imageFile;
+	private String species;
+	private Double maxFower;
+	private Double avgFower;
+	private Double weight;
+	private String date;
+	private String time;
+	private Double timeing;
+	private Double GPS_lat;
+	private Double GPS_lot;
 
-	public Fish() {
-		super();
-	}
 
-	public Fish(String id, String user_id, String name, String species, String imgLocation, double maxFower,
-			double avgFower, double weight, String date, double time, String GPS) {
-		super();
-		this.id = id;
-		this.user_id = user_id;
-		this.name = name;
-		this.species = species;
-		this.imgLocation = imgLocation;
-		this.maxFower = maxFower;
-		this.avgFower = avgFower;
-		this.weight = weight;
-		this.date = date;
-		this.time = time;
-		this.GPS = GPS;
-	}
-	
-	public String toString(){
-		Gson gson=new Gson();
-		return gson.toJson(this);
-	}
-	 
 	public String getId() {
 		return id;
 	}
@@ -64,20 +42,20 @@ public class Fish {
 		this.name = name;
 	}
 
+	public String getImageFile() {
+		return imageFile;
+	}
+
+	public void setImageFile(String imageFile) {
+		this.imageFile = imageFile;
+	}
+
 	public String getSpecies() {
 		return species;
 	}
 
 	public void setSpecies(String species) {
 		this.species = species;
-	}
-
-	public String getImgLocation() {
-		return imgLocation;
-	}
-
-	public void setImgLocation(String imgLocation) {
-		this.imgLocation = imgLocation;
 	}
 
 	public double getMaxFower() {
@@ -92,7 +70,7 @@ public class Fish {
 		return avgFower;
 	}
 
-	public void setAgvFower(double avgFower) {
+	public void setAvgFower(double avgFower) {
 		this.avgFower = avgFower;
 	}
 
@@ -112,20 +90,41 @@ public class Fish {
 		this.date = date;
 	}
 
-	public double getTime() {
+	public String getTime() {
 		return time;
 	}
 
-	public void setTime(double time) {
+	public void setTime(String time) {
 		this.time = time;
 	}
 
-	public String getGPS() {
-		return GPS;
+	public double getTimeing() {
+		return timeing;
 	}
 
-	public void setGPS(String GPS) {
-		this.GPS = GPS;
+	public void setTimeing(double timeing) {
+		this.timeing = timeing;
+	}
+
+	public double getGPS_lat() {
+		return GPS_lat;
+	}
+
+	public void setGPS_lat(double GPS_lat) {
+		this.GPS_lat = GPS_lat;
+	}
+
+	public double getGPS_lot() {
+		return GPS_lot;
+	}
+
+	public void setGPS_lot(double GPS_lot) {
+		this.GPS_lot = GPS_lot;
+	}
+
+	public String toString() {
+		Gson gson = new Gson();
+		return gson.toJson(this);
 	}
 
 }

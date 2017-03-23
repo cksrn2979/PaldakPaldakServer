@@ -31,6 +31,21 @@ public class FishController {
 		this.fishService = fishService;
 	}
 
+	@RequestMapping(value = "/saveFish", method = { RequestMethod.GET, RequestMethod.POST })
+	public String saveFish(Model model,Fish fish) {
+		Log.line();
+		Log.i("/saveFish");
+		Log.i(fish.toString());
+		Log.i("Insert Fish -------------------------");
+		if(fishService.insert(fish))
+			Log.i("---------------Fish inserted");
+		else
+			Log.i("---------------insert Failed");
+		
+		
+		return "saveFish";
+	}
+	
 	@RequestMapping(value = "/saveFishImage", method = { RequestMethod.GET, RequestMethod.POST })
 	public String saveFishImage(Model model, String id, String filename,
 			@RequestParam("image") MultipartFile multipartFile, HttpServletRequest request) {
@@ -41,8 +56,8 @@ public class FishController {
 		Log.i("FILESIZE  :" + multipartFile.getSize());
 		Log.i("Save File.........");
 
-		String folder_path = request.getSession().getServletContext().getRealPath("/") + "/resources/fish_img/";
-		String imagePath=folder_path + filename + ".jpg";
+		String folder_path = request.getSession().getServletContext().getRealPath("/") + "resources/fish_img/";
+		String imagePath=folder_path + filename;
 		
 		Log.i("Image Path  : " +imagePath);
 		File file = new File(imagePath);
@@ -56,7 +71,7 @@ public class FishController {
 
 		Log.i("........File Saved");
 
-		return "home";
+		return "saveFishImage";
 	}
 
 	@RequestMapping(value = "/showFishsByID", method = { RequestMethod.GET, RequestMethod.POST })

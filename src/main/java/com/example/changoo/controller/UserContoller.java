@@ -87,7 +87,7 @@ public class UserContoller {
 
 		//else {
 		//	if (userFromDB.getPassword().equals(password) == true)
-				message.put(Protocol.CHECKING_USER, Protocol.JOIN_OK);
+		//	message.put(Protocol.CHECKING_USER, Protocol.JOIN_OK);
 		//	else
 		//		message.put(Protocol.CHECKING_USER, Protocol.USER_NOK);
 		//}

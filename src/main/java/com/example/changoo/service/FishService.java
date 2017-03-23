@@ -20,4 +20,8 @@ public class FishService {
 	public List<Fish> getFishsByID(String user_id) {
 		return fishDAO.getFishsByID(user_id);
 	}
+	
+	public boolean  insert(Fish fish) {
+		return fishDAO.insert(fish);
+	}
 }
