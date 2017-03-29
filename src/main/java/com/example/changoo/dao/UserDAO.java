@@ -30,7 +30,7 @@ public class UserDAO {
 			return null;
 		}
 	}
-
+	
 	class UserMapper implements RowMapper<User> {
 		@Override
 		public User mapRow(ResultSet rs, int rowNum) throws SQLException {

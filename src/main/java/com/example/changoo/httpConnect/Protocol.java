@@ -10,4 +10,5 @@ public class Protocol {
     public static final String USER_NOK="USER_NOK";
     public static final String JOIN_OK="JOIN_OK";
     public static final String JOIN_NOK="JOIN_NOK";
+
 }
