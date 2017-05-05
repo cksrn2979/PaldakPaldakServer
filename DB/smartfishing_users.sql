@@ -26,6 +26,10 @@ CREATE TABLE `users` (
   `id` varchar(45) NOT NULL,
   `password` varchar(45) NOT NULL,
   `name` varchar(45) NOT NULL,
+  `gender` varchar(45) DEFAULT NULL,
+  `phone` varchar(45) DEFAULT NULL,
+  `birthday` varchar(45) DEFAULT NULL,
+  `imgFile` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -36,7 +40,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES ('cksrn2979','1','이찬구'),('dlsrnsi','1','이인구');
+INSERT INTO `users` VALUES ('cksrn2979','1','이찬구',NULL,NULL,NULL,NULL),('dlsrnsi','1','이인구',NULL,NULL,NULL,NULL);
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -49,4 +53,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-03-23 22:45:31
+-- Dump completed on 2017-05-05 22:22:25
