@@ -4,6 +4,9 @@ public class User {
 	String id;
 	String password;
 	String name;
+	String gender;
+	String birth;
+	String phoneNumber;
 
 	public User() {
 		super();
@@ -14,7 +17,7 @@ public class User {
 		this.id = id;
 		this.password = password;
 	}
-	
+
 	public User(String id, String password, String name) {
 		super();
 		this.id = id;
@@ -44,6 +47,30 @@ public class User {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	public String getGender() {
+		return gender;
+	}
+
+	public void setGender(String gender) {
+		this.gender = gender;
+	}
+
+	public String getBirth() {
+		return birth;
+	}
+
+	public void setBirth(String birth) {
+		this.birth = birth;
+	}
+
+	public String getPhoneNumber() {
+		return phoneNumber;
+	}
+
+	public void setPhoneNumber(String phoneNumber) {
+		this.phoneNumber = phoneNumber;
 	}
 
 }

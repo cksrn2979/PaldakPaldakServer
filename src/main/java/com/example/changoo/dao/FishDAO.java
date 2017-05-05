@@ -28,8 +28,8 @@ public class FishDAO {
 	}
 
 	public boolean insert(Fish fish) {
-		String sql = "insert into fishs(id,user_id,name,species,imgFile,maxFower,avgFower,weight,date,time,timeing,GPS_lat,Gps_lot)"
-				+ " value (?,?,?,?,?,?,?,?,?,?,?,?,?);";
+		String sql = "insert into fishs(id,user_id,name,species,imgFile,maxFower,avgFower,date,time,timeing,GPS_lat,Gps_lot)"
+				+ " value (?,?,?,?,?,?,?,?,?,?,?,?);";
 		String id = fish.getId();
 		String user_id = fish.getUser_id();
 		String name = fish.getName();
@@ -37,7 +37,6 @@ public class FishDAO {
 		String imgFile = fish.getImageFile();
 		Double maxFower = fish.getMaxFower();
 		Double avgFower = fish.getAvgFower();
-		Double weight = fish.getWeight();
 		String date = fish.getDate();
 		String time = fish.getTime();
 		Double timeing = fish.getTimeing();
@@ -45,7 +44,7 @@ public class FishDAO {
 		Double Gps_lot = fish.getGPS_lot();
 
 		return jdbcTemplate.update(sql, new Object[] { id, user_id, name, species, imgFile, maxFower, avgFower,
-				weight, date, time, timeing, GPS_lat, Gps_lot }) == 1;
+				date, time, timeing, GPS_lat, Gps_lot }) == 1;
 	}
 
 	class FishMapper implements RowMapper<Fish> {
@@ -59,12 +58,11 @@ public class FishDAO {
 			fish.setImageFile(rs.getString("imgFile"));
 			fish.setMaxFower(rs.getDouble("maxFower"));
 			fish.setAvgFower(rs.getDouble("avgFower"));
-			fish.setWeight(rs.getDouble("weight"));
 			fish.setDate(rs.getString("date"));
 			fish.setTime(rs.getString("time"));
 			fish.setTimeing(rs.getDouble("timeing"));
 			fish.setGPS_lat(rs.getDouble("GPS_lat"));
-			fish.setGPS_lat(rs.getDouble("GPS_lot"));
+			fish.setGPS_lot(rs.getDouble("GPS_lot"));
 
 			return fish;
 		}

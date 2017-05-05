@@ -90,7 +90,7 @@ public class FishController {
 
 		List<Fish> fishs = fishService.getFishsByID(id);
 
-		Log.i("get User Fish From DataBase");
+		Log.i("get Fish By Id From DataBase");
 
 		JSONObject message = new JSONObject();
 		JSONArray fishArray = new JSONArray();

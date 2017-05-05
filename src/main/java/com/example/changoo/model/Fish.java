@@ -10,7 +10,6 @@ public class Fish {
 	private String species;
 	private Double maxFower;
 	private Double avgFower;
-	private Double weight;
 	private String date;
 	private String time;
 	private Double timeing;
@@ -74,13 +73,6 @@ public class Fish {
 		this.avgFower = avgFower;
 	}
 
-	public double getWeight() {
-		return weight;
-	}
-
-	public void setWeight(double weight) {
-		this.weight = weight;
-	}
 
 	public String getDate() {
 		return date;
