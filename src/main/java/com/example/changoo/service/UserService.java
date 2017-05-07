@@ -19,4 +19,8 @@ public class UserService {
 		return userDAO.getUser(id);
 
 	}
+	
+	public UserDAO getUserDAO(){
+		return userDAO;
+	}
 }

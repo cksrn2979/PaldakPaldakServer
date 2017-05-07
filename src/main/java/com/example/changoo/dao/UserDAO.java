@@ -31,6 +31,11 @@ public class UserDAO {
 		}
 	}
 
+	public void setUser(User user){
+		String str = "insert into users (id, password, name, gender) values('"+user.getId()+"', '"+user.getPassword()+"','"+user.getName()+"','"+user.getGender()+"');";
+		jdbcTemplate.execute(str);
+	}
+	
 	class UserMapper implements RowMapper<User> {
 		@Override
 		public User mapRow(ResultSet rs, int rowNum) throws SQLException {
