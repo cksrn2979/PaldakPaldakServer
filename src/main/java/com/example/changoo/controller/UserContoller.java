@@ -23,14 +23,16 @@ public class UserContoller {
 	}
 
 	@RequestMapping(value = "/login", method = { RequestMethod.POST, RequestMethod.GET })
-	public String login(Model model, User user) {
+	public String login(Model model, User user, String loginMethod) {
 		Log.line();
 		Log.i("/login");
 
 		String id = user.getId();
 		String password = user.getPassword();
-
-		Log.i("ID : " + id + " PW : " + password);
+		String name = user.getName();
+		String gender = user.getGender();
+		
+		Log.i("ID : " + id + " PW : " + password + "NAME : "+ name + " GENDER : " + gender + " loginMethod : " + loginMethod);
 
 		/**
 		 * CHECKING Data base///////////////////// OK == FIND USER SUCCESS NOK==
@@ -41,8 +43,19 @@ public class UserContoller {
 
 		User userFromDB = userService.getUser(id);
 		if (userFromDB == null) {
-			Log.i("ID : " + id + "______DB don't have ID");
-			message.put(Protocol.CHECKING_USER, Protocol.USER_NOK);
+			//기존 아이디로 로그인 시도 시 아이디 없는 경우
+			if(loginMethod == null)
+			{
+				Log.i("ID : " + id + "______DB don't have ID");
+				message.put(Protocol.CHECKING_USER, Protocol.USER_NOK);
+			}
+			//페이스북 아이디로 로그인을 시도하는 경우
+			else if(loginMethod.equals("facebook")){
+				Log.i("ID : " + id + "______DB have ID && PASWWORD");
+				userService.getUserDAO().setUser(user);
+				message.put(Protocol.CHECKING_USER, Protocol.USER_OK);
+			}
+			
 		}
 
 		else {
@@ -86,6 +99,7 @@ public class UserContoller {
 
 		if (userFromDB == null) {// DB에 해당 id 존재 안함
 			// DB 반영 작업
+			userService.getUserDAO().setUser(user);
 			message.put(Protocol.CHECKING_USER, Protocol.JOIN_OK);
 
 		}
