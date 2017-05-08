@@ -20,8 +20,16 @@ public class FishService {
 	public List<Fish> getFishsByID(String user_id) {
 		return fishDAO.getFishsByID(user_id);
 	}
-	
-	public boolean  insert(Fish fish) {
+
+	public List<Fish> getFishsByPeriod(String period1, String period2) {
+		return fishDAO.getFishsByPeriod(period1, period2);
+	}
+
+	public List<Fish> getFishsforRank(String species, String period1, String period2) {
+		return fishDAO.getFishsforRank(species, period1, period2);
+	}
+
+	public boolean insert(Fish fish) {
 		return fishDAO.insert(fish);
 	}
 }

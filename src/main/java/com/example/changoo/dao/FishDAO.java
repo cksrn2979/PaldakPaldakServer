@@ -26,7 +26,18 @@ public class FishDAO {
 		String str = "select * from fishs where user_id=? order by name ASC";
 		return jdbcTemplate.query(str, new Object[] { user_id }, new FishMapper());
 	}
+	
+	public List<Fish> getFishsByPeriod(String period1,String period2) {
+		String str = "select * from fishs where date between ? and ? order by name ASC";
+		return jdbcTemplate.query(str,new Object[] {period1,period2}, new FishMapper());
+	}
+	
+	public List<Fish> getFishsforRank(String species,String period1,String period2) {
+		String str = "select * from fishs where species=? and date between ? and ? order by name ASC";
+		return jdbcTemplate.query(str,new Object[] { species,period1,period2 }, new FishMapper());
+	}
 
+	
 	public boolean insert(Fish fish) {
 		String sql = "insert into fishs(id,user_id,name,species,imgFile,maxFower,avgFower,date,time,timeing,GPS_lat,Gps_lot)"
 				+ " value (?,?,?,?,?,?,?,?,?,?,?,?);";

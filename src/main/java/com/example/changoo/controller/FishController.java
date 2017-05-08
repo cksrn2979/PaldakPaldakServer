@@ -32,20 +32,19 @@ public class FishController {
 	}
 
 	@RequestMapping(value = "/saveFish", method = { RequestMethod.GET, RequestMethod.POST })
-	public String saveFish(Model model,Fish fish) {
+	public String saveFish(Model model, Fish fish) {
 		Log.line();
 		Log.i("/saveFish");
 		Log.i(fish.toString());
 		Log.i("Insert Fish -------------------------");
-		if(fishService.insert(fish))
+		if (fishService.insert(fish))
 			Log.i("---------------Fish inserted");
 		else
 			Log.i("---------------insert Failed");
-		
-		
+
 		return "saveFish";
 	}
-	
+
 	@RequestMapping(value = "/saveFishImage", method = { RequestMethod.GET, RequestMethod.POST })
 	public String saveFishImage(Model model, String id, String filename,
 			@RequestParam("image") MultipartFile multipartFile, HttpServletRequest request) {
@@ -57,9 +56,9 @@ public class FishController {
 		Log.i("Save File.........");
 
 		String folder_path = request.getSession().getServletContext().getRealPath("/") + "resources/fish_img/";
-		String imagePath=folder_path + filename;
-		
-		Log.i("Image Path  : " +imagePath);
+		String imagePath = folder_path + filename;
+
+		Log.i("Image Path  : " + imagePath);
 		File file = new File(imagePath);
 
 		try {
@@ -108,4 +107,73 @@ public class FishController {
 
 		return "showFishsByID";
 	}
+
+	@RequestMapping(value = "/showFishsforRank", params = "species!=null", method = { RequestMethod.GET,
+			RequestMethod.POST })
+	public String showFishsforRank(Model model, String species, String period1, String period2) {
+		Log.line();
+
+		Log.i("/showFishsforRank " + "Period1= " + period1 + "  " + "Period2= " + period2 + "  " + "Species= "
+				+ species);
+
+		/**
+		 * get FISH LIST from Data base/////////////////////
+		 */
+
+		///////////////////////////////////////////////////////////
+
+		List<Fish> fishs = fishService.getFishsforRank(species, period1, period2);
+
+		Log.i("get Species Fish From DataBase" + species);
+
+		JSONObject rank_message = new JSONObject();
+		JSONArray rank_fishArray = new JSONArray();
+		JSONObject rank_fishObject = new JSONObject();
+
+		if (fishs != null) {
+			for (int i = 0; i < fishs.size(); i++) {
+				Fish fish = fishs.get(i);
+				rank_fishArray.add(i, fish);
+			}
+		}
+
+		rank_message.put("fishs", fishs);
+		model.addAttribute("message", rank_message);
+
+		return "showFishsBySpecies";
+	}
+
+	@RequestMapping(value = "/showFishsforRank", params = "species=null", method = { RequestMethod.GET,
+			RequestMethod.POST })
+	public String showFishsforRank(Model model, String period1, String period2) {
+		Log.line();
+		Log.i("/showFishsByPeriod " + "Period1=" + period1 + "\n" + "Period2=" + period2);
+
+		/**
+		 * get FISH LIST from Data base/////////////////////
+		 */
+
+		///////////////////////////////////////////////////////////
+
+		List<Fish> fishs = fishService.getFishsByPeriod(period1, period2);
+
+		Log.i("All Species Fish From DataBase");
+
+		JSONObject all_rank_message = new JSONObject();
+		JSONArray all_rank_fishArray = new JSONArray();
+		JSONObject all_rank_fishObject = new JSONObject();
+
+		if (fishs != null) {
+			for (int i = 0; i < fishs.size(); i++) {
+				Fish fish = fishs.get(i);
+				all_rank_fishArray.add(i, fish);
+			}
+		}
+
+		all_rank_message.put("fishs", fishs);
+		model.addAttribute("message", all_rank_message);
+
+		return "showFishs";
+	}
+
 }
