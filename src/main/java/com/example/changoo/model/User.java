@@ -1,28 +1,23 @@
 package com.example.changoo.model;
 
+import com.google.gson.Gson;
+
 public class User {
-	String id;
-	String password;
-	String name;
-	String gender;
-	String birth;
-	String phoneNumber;
+	private String id;
+	private String password;
+	private String name;
+	private String gender;
+	private String birth;
+	private String phoneNumber;
+	private String imgFile;
 
 	public User() {
 		super();
 	}
 
-	public User(String id, String password) {
-		super();
-		this.id = id;
-		this.password = password;
-	}
-
-	public User(String id, String password, String name) {
-		super();
-		this.id = id;
-		this.password = password;
-		this.name = name;
+	public String toString() {
+		Gson gson = new Gson();
+		return gson.toJson(this);
 	}
 
 	public String getName() {
@@ -71,6 +66,14 @@ public class User {
 
 	public void setPhoneNumber(String phoneNumber) {
 		this.phoneNumber = phoneNumber;
+	}
+
+	public String getImgFile() {
+		return imgFile;
+	}
+
+	public void setImgFile(String imgFile) {
+		this.imgFile = imgFile;
 	}
 
 }

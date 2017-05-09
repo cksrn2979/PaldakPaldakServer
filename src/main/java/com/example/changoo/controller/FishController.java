@@ -73,7 +73,8 @@ public class FishController {
 		return "saveFishImage";
 	}
 
-	@RequestMapping(value = "/showFishsByID", method = { RequestMethod.GET, RequestMethod.POST })
+	@RequestMapping(value = "/showFishsByID", params = "fishname=null", method = { RequestMethod.GET,
+			RequestMethod.POST })
 	public String login(Model model, User user) {
 		Log.line();
 		Log.i("/showFishsByID");
@@ -108,12 +109,50 @@ public class FishController {
 		return "showFishsByID";
 	}
 
+	@RequestMapping(value = "/showFishsByID", params = "fishname!=null", method = { RequestMethod.GET,
+			RequestMethod.POST })
+	public String login(Model model, User user, String fishname) {
+		Log.line();
+		Log.i("/showFishsByID and Fishname");
+
+		String id = user.getId();
+		Log.i("ID : " + id);
+		Log.i("Fishname : " + fishname);
+
+		/**
+		 * get FISH LIST from Data base/////////////////////
+		 */
+
+		///////////////////////////////////////////////////////////
+
+		List<Fish> fishs = fishService.getFishsByIDAndFishName(id, fishname);
+
+		Log.i("get Fish By Id and FishName From DataBase");
+
+		JSONObject message = new JSONObject();
+		JSONArray fishArray = new JSONArray();
+		JSONObject fishObject = new JSONObject();
+
+		if (fishs != null) {
+			for (int i = 0; i < fishs.size(); i++) {
+				Fish fish = fishs.get(i);
+				fishArray.add(i, fish);
+			}
+		}
+
+		message.put("fishs", fishs);
+		model.addAttribute("message", message);
+
+		return "showFishsByID";
+	}
+
 	@RequestMapping(value = "/showFishsforRank", params = "species!=null", method = { RequestMethod.GET,
 			RequestMethod.POST })
-	public String showFishsforRank(Model model, String species, String period1, String period2) {
+	public String showFishsforRank(Model model, String species, String st_time, String end_time) {
 		Log.line();
 
-		Log.i("/showFishsforRank " + "Period1= " + period1 + "  " + "Period2= " + period2 + "  " + "Species= "
+		Log.i("/showFishsforRank In Period By Species");
+		Log.i("st_time= " + st_time + "\t" + "end_time= " + end_time + "\t" + "Species= "
 				+ species);
 
 		/**
@@ -122,7 +161,7 @@ public class FishController {
 
 		///////////////////////////////////////////////////////////
 
-		List<Fish> fishs = fishService.getFishsforRank(species, period1, period2);
+		List<Fish> fishs = fishService.getFishsInPeriodBySpecies(species, st_time, end_time);
 
 		Log.i("get Species Fish From DataBase" + species);
 
@@ -145,9 +184,10 @@ public class FishController {
 
 	@RequestMapping(value = "/showFishsforRank", params = "species=null", method = { RequestMethod.GET,
 			RequestMethod.POST })
-	public String showFishsforRank(Model model, String period1, String period2) {
+	public String showFishsforRank(Model model, String st_time, String end_time) {
 		Log.line();
-		Log.i("/showFishsByPeriod " + "Period1=" + period1 + "\n" + "Period2=" + period2);
+		Log.i("/showFishsforRank In Period");
+		Log.i("st_time=" + st_time + "\t" + "end_time=" + end_time);
 
 		/**
 		 * get FISH LIST from Data base/////////////////////
@@ -155,7 +195,7 @@ public class FishController {
 
 		///////////////////////////////////////////////////////////
 
-		List<Fish> fishs = fishService.getFishsByPeriod(period1, period2);
+		List<Fish> fishs = fishService.getFishsInPeriod(st_time, end_time);
 
 		Log.i("All Species Fish From DataBase");
 

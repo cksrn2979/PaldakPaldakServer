@@ -17,10 +17,10 @@ public class UserService {
 
 	public User getUser(String id) {
 		return userDAO.getUser(id);
-
 	}
 	
-	public UserDAO getUserDAO(){
-		return userDAO;
+	public boolean insert(User user) {
+		return userDAO.insert(user);
 	}
+	
 }

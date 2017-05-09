@@ -31,11 +31,18 @@ public class UserDAO {
 		}
 	}
 
-	public void setUser(User user){
-		String str = "insert into users (id, password, name, gender) values('"+user.getId()+"', '"+user.getPassword()+"','"+user.getName()+"','"+user.getGender()+"');";
-		jdbcTemplate.execute(str);
+	public boolean insert(User user) {
+		String sql = "insert into users (id, password, name, gender,phonenumber,birth,imgFile) values(?,?,?,?,?,?)";
+		String id = user.getId();
+		String password = user.getPassword();
+		String name = user.getName();
+		String gender = user.getGender();
+		String phoneNumber = user.getPhoneNumber();
+		String birth = user.getBirth();
+		String imgFile = user.getImgFile();
+		return jdbcTemplate.update(sql, new Object[] { id, password, name, gender, phoneNumber, birth, imgFile }) == 1;
 	}
-	
+
 	class UserMapper implements RowMapper<User> {
 		@Override
 		public User mapRow(ResultSet rs, int rowNum) throws SQLException {
@@ -43,6 +50,10 @@ public class UserDAO {
 			user.setId(rs.getString("id"));
 			user.setPassword(rs.getString("password"));
 			user.setName(rs.getString("name"));
+			user.setGender(rs.getString("gender"));
+			user.setBirth(rs.getString("birth"));
+			user.setPhoneNumber(rs.getString("phoneNumber"));
+			user.setImgFile(rs.getString("imgFile"));
 
 			return user;
 		}

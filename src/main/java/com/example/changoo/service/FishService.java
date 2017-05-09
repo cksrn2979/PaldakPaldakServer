@@ -20,13 +20,16 @@ public class FishService {
 	public List<Fish> getFishsByID(String user_id) {
 		return fishDAO.getFishsByID(user_id);
 	}
-
-	public List<Fish> getFishsByPeriod(String period1, String period2) {
-		return fishDAO.getFishsByPeriod(period1, period2);
+	public List<Fish> getFishsByIDAndFishName(String user_id,String fishname) {
+		return fishDAO.getFishsByIDAndFishName(user_id,fishname);
 	}
 
-	public List<Fish> getFishsforRank(String species, String period1, String period2) {
-		return fishDAO.getFishsforRank(species, period1, period2);
+	public List<Fish> getFishsInPeriod(String st_time, String end_time) {
+		return fishDAO.getFishsInPeriod(st_time, end_time);
+	}
+
+	public List<Fish> getFishsInPeriodBySpecies(String species, String st_time, String end_time) {
+		return fishDAO.getFishsInPeriodBySpecies(species, st_time, end_time);
 	}
 
 	public boolean insert(Fish fish) {

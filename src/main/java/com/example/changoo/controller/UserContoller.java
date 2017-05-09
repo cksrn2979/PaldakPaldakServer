@@ -29,11 +29,11 @@ public class UserContoller {
 
 		String id = user.getId();
 		String password = user.getPassword();
-		String name = user.getName();
-		String gender = user.getGender();
-		
-		Log.i("ID : " + id + " PW : " + password + "NAME : "+ name + " GENDER : " + gender + " loginMethod : " + loginMethod);
-
+		Log.i("User input");
+		Log.i("ID : " + id);
+		Log.i(" PW : " + password);
+		Log.line();
+	
 		/**
 		 * CHECKING Data base///////////////////// OK == FIND USER SUCCESS NOK==
 		 * FIND USER FAIL
@@ -43,27 +43,36 @@ public class UserContoller {
 
 		User userFromDB = userService.getUser(id);
 		if (userFromDB == null) {
-			//기존 아이디로 로그인 시도 시 아이디 없는 경우
-			if(loginMethod == null)
-			{
-				Log.i("ID : " + id + "______DB don't have ID");
+			// 기존 아이디로 로그인 시도 시 아이디 없는 경우
+			if (loginMethod == null) {
+				Log.i("ID : " + id + "   DB don't have ID");
 				message.put(Protocol.CHECKING_USER, Protocol.USER_NOK);
 			}
-			//페이스북 아이디로 로그인을 시도하는 경우
-			else if(loginMethod.equals("facebook")){
-				Log.i("ID : " + id + "______DB have ID && PASWWORD");
-				userService.getUserDAO().setUser(user);
+			// 페이스북 아이디로 로그인을 시도하는 경우
+			else if (loginMethod.equals("facebook")) {
+				Log.i("ID : " + id + "   DB have ID && PASWWORD");
+				userService.insert(user);
+				userFromDB = userService.getUser(id);
 				message.put(Protocol.CHECKING_USER, Protocol.USER_OK);
+				message.put("user", userFromDB);
 			}
-			
+
 		}
 
 		else {
 			if (userFromDB.getPassword().equals(password) == true) {
-				Log.i("ID : " + id + "______DB have ID && PASWWORD");
+				Log.i("DB have ID && PASWWORD");
+				Log.i("ID : " +userFromDB.getId());
+				Log.i("PW : " +userFromDB.getPassword());
+				Log.i("Gender : " +userFromDB.getGender());
+				Log.i("PhoneNumber : " +userFromDB.getPhoneNumber());
+				Log.i("Birth : " +userFromDB.getBirth());				
+				Log.i("ImgFile : " +userFromDB.getImgFile());
 				message.put(Protocol.CHECKING_USER, Protocol.USER_OK);
+			
+				message.put("user", userFromDB);
 			} else {
-				Log.i("ID : " + id + "______DB have ID but PASSWORD is wrong");
+				Log.i("ID : " + id + "   DB have ID but PASSWORD is wrong");
 				message.put(Protocol.CHECKING_USER, Protocol.USER_NOK);
 			}
 		}
@@ -99,7 +108,7 @@ public class UserContoller {
 
 		if (userFromDB == null) {// DB에 해당 id 존재 안함
 			// DB 반영 작업
-			userService.getUserDAO().setUser(user);
+			userService.insert(user);
 			message.put(Protocol.CHECKING_USER, Protocol.JOIN_OK);
 
 		}

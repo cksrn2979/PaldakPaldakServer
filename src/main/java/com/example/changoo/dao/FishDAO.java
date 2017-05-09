@@ -26,18 +26,22 @@ public class FishDAO {
 		String str = "select * from fishs where user_id=? order by name ASC";
 		return jdbcTemplate.query(str, new Object[] { user_id }, new FishMapper());
 	}
-	
-	public List<Fish> getFishsByPeriod(String period1,String period2) {
-		String str = "select * from fishs where date between ? and ? order by name ASC";
-		return jdbcTemplate.query(str,new Object[] {period1,period2}, new FishMapper());
-	}
-	
-	public List<Fish> getFishsforRank(String species,String period1,String period2) {
-		String str = "select * from fishs where species=? and date between ? and ? order by name ASC";
-		return jdbcTemplate.query(str,new Object[] { species,period1,period2 }, new FishMapper());
+
+	public List<Fish> getFishsByIDAndFishName(String user_id, String fishname) {
+		String str = "select * from fishs where user_id=? and name like ? order by name ASC";
+		return jdbcTemplate.query(str, new Object[] { user_id, "%" + fishname + "%" }, new FishMapper());
 	}
 
-	
+	public List<Fish> getFishsInPeriod(String st_time, String end_time) {
+		String str = "select * from fishs where date between ? and ? order by name ASC";
+		return jdbcTemplate.query(str, new Object[] { st_time, end_time }, new FishMapper());
+	}
+
+	public List<Fish> getFishsInPeriodBySpecies(String species, String st_time, String end_time) {
+		String str = "select * from fishs where species like ? and date between ? and ? order by name ASC";
+		return jdbcTemplate.query(str, new Object[] { "%" + species + "%", st_time, end_time }, new FishMapper());
+	}
+
 	public boolean insert(Fish fish) {
 		String sql = "insert into fishs(id,user_id,name,species,imgFile,maxFower,avgFower,date,time,timeing,GPS_lat,Gps_lot)"
 				+ " value (?,?,?,?,?,?,?,?,?,?,?,?);";
@@ -54,8 +58,8 @@ public class FishDAO {
 		Double GPS_lat = fish.getGPS_lat();
 		Double Gps_lot = fish.getGPS_lot();
 
-		return jdbcTemplate.update(sql, new Object[] { id, user_id, name, species, imgFile, maxFower, avgFower,
-				date, time, timeing, GPS_lat, Gps_lot }) == 1;
+		return jdbcTemplate.update(sql, new Object[] { id, user_id, name, species, imgFile, maxFower, avgFower, date,
+				time, timeing, GPS_lat, Gps_lot }) == 1;
 	}
 
 	class FishMapper implements RowMapper<Fish> {
