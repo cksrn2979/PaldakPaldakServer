@@ -32,14 +32,14 @@ public class UserDAO {
 	}
 
 	public boolean insert(User user) {
-		String sql = "insert into users (id, password, name, gender,phonenumber,birth,imgFile) values(?,?,?,?,?,?)";
+		String sql = "insert into users (id, password, name, gender,phonenumber,birth,imgFile) values(?,?,?,?,?,?,?)";
 		String id = user.getId();
 		String password = user.getPassword();
 		String name = user.getName();
 		String gender = user.getGender();
 		String phoneNumber = user.getPhoneNumber();
 		String birth = user.getBirth();
-		String imgFile = user.getImgFile();
+		String imgFile = user.getImageFile();
 		return jdbcTemplate.update(sql, new Object[] { id, password, name, gender, phoneNumber, birth, imgFile }) == 1;
 	}
 
@@ -53,7 +53,7 @@ public class UserDAO {
 			user.setGender(rs.getString("gender"));
 			user.setBirth(rs.getString("birth"));
 			user.setPhoneNumber(rs.getString("phoneNumber"));
-			user.setImgFile(rs.getString("imgFile"));
+			user.setImageFile(rs.getString("imgFile"));
 
 			return user;
 		}

@@ -12,7 +12,7 @@ public class Fish {
 	private Double avgFower;
 	private String date;
 	private String time;
-	private Double timeing;
+	private Integer timeing;
 	private Double GPS_lat;
 	private Double GPS_lot;
 
@@ -90,11 +90,11 @@ public class Fish {
 		this.time = time;
 	}
 
-	public double getTimeing() {
+	public Integer getTimeing() {
 		return timeing;
 	}
 
-	public void setTimeing(double timeing) {
+	public void setTimeing(Integer timeing) {
 		this.timeing = timeing;
 	}
 

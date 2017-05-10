@@ -1,11 +1,18 @@
 package com.example.changoo.controller;
 
+import java.io.File;
+import java.io.IOException;
+
+import javax.servlet.http.HttpServletRequest;
+
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.example.changoo.httpConnect.Protocol;
 import com.example.changoo.log.Log;
@@ -31,7 +38,7 @@ public class UserContoller {
 		String password = user.getPassword();
 		Log.i("User input");
 		Log.i("ID : " + id);
-		Log.i(" PW : " + password);
+		Log.i("PW : " + password);
 		Log.line();
 	
 		/**
@@ -67,7 +74,7 @@ public class UserContoller {
 				Log.i("Gender : " +userFromDB.getGender());
 				Log.i("PhoneNumber : " +userFromDB.getPhoneNumber());
 				Log.i("Birth : " +userFromDB.getBirth());				
-				Log.i("ImgFile : " +userFromDB.getImgFile());
+				Log.i("ImgFile : " +userFromDB.getImageFile());
 				message.put(Protocol.CHECKING_USER, Protocol.USER_OK);
 			
 				message.put("user", userFromDB);
@@ -93,9 +100,16 @@ public class UserContoller {
 		String gender = user.getGender();
 		String birth = user.getBirth();
 		String phonenumber = user.getPhoneNumber();
-
-		System.out.println("ID" + id + " PW " + password + " NAME " + name + "GENDER " + gender + "BIRTH " + birth
-				+ "PHONENUMBER " + phonenumber);
+		
+		Log.line();
+		Log.i("/Join");
+		Log.i("ID" + id);
+		Log.i(" PW " + password);
+		Log.i(" NAME " + name);
+		Log.i("GENDER " + gender);
+		Log.i("BIRTH " + birth);
+		Log.i("PHONENUMBER " + phonenumber);
+	
 
 		/**
 		 * CHECKING Data base///////////////////// NOK == USER ALREADY EXISTS
@@ -122,5 +136,33 @@ public class UserContoller {
 
 		return "login";
 
+	}
+	
+	@RequestMapping(value = "/saveUserImage", method = { RequestMethod.GET, RequestMethod.POST })
+	public String saveFishImage(Model model, String id, String filename,
+			@RequestParam("image") MultipartFile multipartFile, HttpServletRequest request) {
+		Log.line();
+		Log.i("/saveFishImage");
+		Log.i("ID : " + id);
+		Log.i("FILENAME : " + filename);
+		Log.i("FILESIZE  :" + multipartFile.getSize());
+		Log.i("Save File.........");
+
+		String folder_path = request.getSession().getServletContext().getRealPath("/") + "resources/user_img/";
+		String imagePath = folder_path + filename;
+
+		Log.i("Image Path  : " + imagePath);
+		File file = new File(imagePath);
+
+		try {
+			multipartFile.transferTo(file);
+		} catch (IllegalStateException | IOException e) {
+			Log.e(e.getMessage());
+			return null;
+		}
+
+		Log.i("........File Saved");
+
+		return "saveUserImage";
 	}
 }

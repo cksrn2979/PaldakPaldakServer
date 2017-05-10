@@ -54,7 +54,7 @@ public class FishDAO {
 		Double avgFower = fish.getAvgFower();
 		String date = fish.getDate();
 		String time = fish.getTime();
-		Double timeing = fish.getTimeing();
+		Integer timeing = fish.getTimeing();
 		Double GPS_lat = fish.getGPS_lat();
 		Double Gps_lot = fish.getGPS_lot();
 
@@ -75,7 +75,7 @@ public class FishDAO {
 			fish.setAvgFower(rs.getDouble("avgFower"));
 			fish.setDate(rs.getString("date"));
 			fish.setTime(rs.getString("time"));
-			fish.setTimeing(rs.getDouble("timeing"));
+			fish.setTimeing(rs.getInt("timeing"));
 			fish.setGPS_lat(rs.getDouble("GPS_lat"));
 			fish.setGPS_lot(rs.getDouble("GPS_lot"));
 
