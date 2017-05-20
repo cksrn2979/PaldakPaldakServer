@@ -81,6 +81,47 @@ public class UserContoller {
 		return "login";
 	}
 
+	@RequestMapping(value = "/saveUser", method = { RequestMethod.GET, RequestMethod.POST })
+	public String saveUser(Model model, User user) {
+		
+		String id = user.getId();
+		String password = user.getPassword();
+		String name = user.getName();
+		String birth = user.getBirth();
+		String phonenumber = user.getPhoneNumber();
+
+		Log.line();
+		Log.i("/saveUser");
+		Log.i(" ID " + id);
+		Log.i(" PW " + password);
+		Log.i(" NAME " + name);
+		Log.i("BIRTH " + birth);
+		Log.i("PHONENUMBER " + phonenumber);
+
+		/**
+		 * CHECKING Data base///////////////////// NOK == USER ALREADY EXISTS
+		 * OK== USER ENROLL SUCCESS
+		 */
+
+		JSONObject message = new JSONObject();
+
+		User userFromDB = userService.getUser(id);
+
+		if (userFromDB == null) {// DB에 해당 id 존재 안함
+			message.put(Protocol.CHECKING_USER, Protocol.JOIN_NOK);
+		}
+
+		else { // DB에 해당 id 존재함
+			if(userService.setUser(user))
+				message.put(Protocol.CHECKING_USER, Protocol.JOIN_OK);
+		}
+
+		model.addAttribute("message", message);
+
+		return "saveUser";
+
+	}
+	
 	@RequestMapping(value = "/join", method = { RequestMethod.GET, RequestMethod.POST })
 	public String join(Model model, User user) {
 		JSONObject message = new JSONObject();
