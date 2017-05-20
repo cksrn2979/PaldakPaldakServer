@@ -30,7 +30,7 @@ public class UserContoller {
 	}
 
 	@RequestMapping(value = "/login", method = { RequestMethod.POST, RequestMethod.GET })
-	public String login(Model model, User user, String loginMethod) {
+	public String login(Model model, User user) {
 		Log.line();
 		Log.i("/login");
 
@@ -40,7 +40,7 @@ public class UserContoller {
 		Log.i("ID : " + id);
 		Log.i("PW : " + password);
 		Log.line();
-	
+
 		/**
 		 * CHECKING Data base///////////////////// OK == FIND USER SUCCESS NOK==
 		 * FIND USER FAIL
@@ -50,33 +50,23 @@ public class UserContoller {
 
 		User userFromDB = userService.getUser(id);
 		if (userFromDB == null) {
-			// 기존 아이디로 로그인 시도 시 아이디 없는 경우
-			if (loginMethod == null) {
-				Log.i("ID : " + id + "   DB don't have ID");
-				message.put(Protocol.CHECKING_USER, Protocol.USER_NOK);
-			}
-			// 페이스북 아이디로 로그인을 시도하는 경우
-			else if (loginMethod.equals("facebook")) {
-				Log.i("ID : " + id + "   DB have ID && PASWWORD");
-				userService.insert(user);
-				userFromDB = userService.getUser(id);
-				message.put(Protocol.CHECKING_USER, Protocol.USER_OK);
-				message.put("user", userFromDB);
-			}
+
+			Log.i("ID : " + id + "   DB don't have ID");
+			message.put(Protocol.CHECKING_USER, Protocol.USER_NOK);
 
 		}
 
 		else {
 			if (userFromDB.getPassword().equals(password) == true) {
 				Log.i("DB have ID && PASWWORD");
-				Log.i("ID : " +userFromDB.getId());
-				Log.i("PW : " +userFromDB.getPassword());
-				Log.i("Gender : " +userFromDB.getGender());
-				Log.i("PhoneNumber : " +userFromDB.getPhoneNumber());
-				Log.i("Birth : " +userFromDB.getBirth());				
-				Log.i("ImgFile : " +userFromDB.getImageFile());
+				Log.i("ID : " + userFromDB.getId());
+				Log.i("PW : " + userFromDB.getPassword());
+				Log.i("Gender : " + userFromDB.getGender());
+				Log.i("PhoneNumber : " + userFromDB.getPhoneNumber());
+				Log.i("Birth : " + userFromDB.getBirth());
+				Log.i("ImgFile : " + userFromDB.getImageFile());
 				message.put(Protocol.CHECKING_USER, Protocol.USER_OK);
-			
+
 				message.put("user", userFromDB);
 			} else {
 				Log.i("ID : " + id + "   DB have ID but PASSWORD is wrong");
@@ -93,51 +83,53 @@ public class UserContoller {
 
 	@RequestMapping(value = "/join", method = { RequestMethod.GET, RequestMethod.POST })
 	public String join(Model model, User user) {
-
-		String id = user.getId();
-		String password = user.getPassword();
-		String name = user.getName();
-		String gender = user.getGender();
-		String birth = user.getBirth();
-		String phonenumber = user.getPhoneNumber();
-		
-		Log.line();
-		Log.i("/Join");
-		Log.i("ID" + id);
-		Log.i(" PW " + password);
-		Log.i(" NAME " + name);
-		Log.i("GENDER " + gender);
-		Log.i("BIRTH " + birth);
-		Log.i("PHONENUMBER " + phonenumber);
-	
-
-		/**
-		 * CHECKING Data base///////////////////// NOK == USER ALREADY EXISTS
-		 * OK== USER ENROLL SUCCESS
-		 */
-
 		JSONObject message = new JSONObject();
-
-		User userFromDB = userService.getUser(id);
-
-		if (userFromDB == null) {// DB에 해당 id 존재 안함
-			// DB 반영 작업
-			userService.insert(user);
-			message.put(Protocol.CHECKING_USER, Protocol.JOIN_OK);
-
-		}
-
-		else { // DB에 해당 id 존재함
-			message.put(Protocol.CHECKING_USER, Protocol.JOIN_NOK);
-
-		}
-
+		message.put(Protocol.CHECKING_USER, Protocol.JOIN_OK);
 		model.addAttribute("message", message);
+		
+//		String id = user.getId();
+//		String password = user.getPassword();
+//		String name = user.getName();
+//		String gender = user.getGender();
+//		String birth = user.getBirth();
+//		String phonenumber = user.getPhoneNumber();
+//
+//		Log.line();
+//		Log.i("/Join");
+//		Log.i("ID" + id);
+//		Log.i(" PW " + password);
+//		Log.i(" NAME " + name);
+//		Log.i("GENDER " + gender);
+//		Log.i("BIRTH " + birth);
+//		Log.i("PHONENUMBER " + phonenumber);
+//
+//		/**
+//		 * CHECKING Data base///////////////////// NOK == USER ALREADY EXISTS
+//		 * OK== USER ENROLL SUCCESS
+//		 */
+//
+//		JSONObject message = new JSONObject();
+//
+//		User userFromDB = userService.getUser(id);
+//
+//		if (userFromDB == null) {// DB에 해당 id 존재 안함
+//			// DB 반영 작업
+//			userService.insert(user);
+//			message.put(Protocol.CHECKING_USER, Protocol.JOIN_OK);
+//
+//		}
+//
+//		else { // DB에 해당 id 존재함
+//			message.put(Protocol.CHECKING_USER, Protocol.JOIN_NOK);
+//
+//		}
+//
+//		model.addAttribute("message", message);
 
 		return "login";
 
 	}
-	
+
 	@RequestMapping(value = "/saveUserImage", method = { RequestMethod.GET, RequestMethod.POST })
 	public String saveFishImage(Model model, String id, String filename,
 			@RequestParam("image") MultipartFile multipartFile, HttpServletRequest request) {
