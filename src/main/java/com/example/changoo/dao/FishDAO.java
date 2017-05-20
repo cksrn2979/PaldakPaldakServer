@@ -61,6 +61,11 @@ public class FishDAO {
 		return jdbcTemplate.update(sql, new Object[] { id, user_id, name, species, imgFile, maxFower, avgFower, date,
 				time, timeing, GPS_lat, Gps_lot }) == 1;
 	}
+	
+	public boolean delete(String id) {
+		String sql = "delete from fishs where id=?"; 
+		return jdbcTemplate.update(sql, new Object[] { id }) == 1;
+	}
 
 	class FishMapper implements RowMapper<Fish> {
 		@Override
