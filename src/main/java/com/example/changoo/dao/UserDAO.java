@@ -11,6 +11,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
+import com.example.changoo.log.Log;
 import com.example.changoo.model.User;
 
 @Repository
@@ -59,4 +60,24 @@ public class UserDAO {
 		}
 	}
 
+	public boolean setUser(User user) {
+		
+		String id = user.getId();
+		String password = user.getPassword();
+		String name = user.getName();
+		String phoneNumber = user.getPhoneNumber();
+		String birth = user.getBirth();
+		String imgFile = user.getImageFile();
+		
+		return jdbcTemplate.update("UPDATE USERS"
+                + " SET password = ?," 
+				+ "name = ?,"
+                + "birth = ?,"
+                + "phoneNumber = ?,"
+				+ "imgFile = ?"
+                + " WHERE id = ? ",
+                new Object[] {password,name,birth,phoneNumber,imgFile,id})==1;
+	}
 }
+	
+

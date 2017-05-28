@@ -44,6 +44,20 @@ public class FishController {
 
 		return "saveFish";
 	}
+	
+	@RequestMapping(value = "/deleteFish", method = { RequestMethod.GET, RequestMethod.POST })
+	public String deleteFish(Model model, String id) {
+		Log.line();
+		Log.i("/deleteFish");
+		Log.i("id:: " + id);
+		Log.i("Delete Fish -------------------------");
+		if (fishService.delete(id))
+			Log.i("---------------Fish deleted");
+		else
+			Log.i("---------------delete Failed");
+
+		return "deleteFish";
+	}
 
 	@RequestMapping(value = "/saveFishImage", method = { RequestMethod.GET, RequestMethod.POST })
 	public String saveFishImage(Model model, String id, String filename,

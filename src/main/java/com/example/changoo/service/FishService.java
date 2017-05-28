@@ -35,4 +35,8 @@ public class FishService {
 	public boolean insert(Fish fish) {
 		return fishDAO.insert(fish);
 	}
+	
+	public boolean delete(String id) {
+		return fishDAO.delete(id);
+}
 }

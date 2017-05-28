@@ -27,8 +27,8 @@ CREATE TABLE `users` (
   `password` varchar(45) NOT NULL,
   `name` varchar(45) NOT NULL,
   `gender` varchar(45) DEFAULT NULL,
-  `phone` varchar(45) DEFAULT NULL,
-  `birthday` varchar(45) DEFAULT NULL,
+  `phonenumber` varchar(45) DEFAULT NULL,
+  `birth` varchar(45) DEFAULT NULL,
   `imgFile` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -40,7 +40,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES ('cksrn2979','1','이찬구',NULL,NULL,NULL,NULL),('dlsrnsi','1','이인구',NULL,NULL,NULL,NULL);
+INSERT INTO `users` VALUES ('cksrn2979','1234','이찬구','남자','01020622979','1992년08월26일','cksrn2979.jpg'),('dongdong','1','강동혁','남자','01057140154','1990년03월01일','dongdong.jpg'),('jihe','1','신지혜','여자','01057481234','1995년02월21일','jihe.jpg'),('songi','1','서송이','여자','01012340000','1991년03월21일','songi.jpg'),('sooyul','1','박수열','남자','01078784545','1990년02월01일','sooyul.jpg');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -53,4 +53,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-05-05 22:22:25
+-- Dump completed on 2017-05-20 16:34:43

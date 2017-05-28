@@ -22,5 +22,10 @@ public class UserService {
 	public boolean insert(User user) {
 		return userDAO.insert(user);
 	}
+
+	public boolean setUser(User user) {
+		return userDAO.setUser(user);
+	}
+
 	
 }
