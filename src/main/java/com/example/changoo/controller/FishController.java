@@ -44,18 +44,30 @@ public class FishController {
 
 		return "saveFish";
 	}
-	
+
 	@RequestMapping(value = "/deleteFish", method = { RequestMethod.GET, RequestMethod.POST })
-	public String deleteFish(Model model, String id) {
+	public String deleteFish(Model model, String id, String filename, HttpServletRequest request) {
 		Log.line();
 		Log.i("/deleteFish");
-		Log.i("id:: " + id);
+		Log.i("id: " + id);
+		Log.i("FILENAME : " + filename);
 		Log.i("Delete Fish -------------------------");
 		if (fishService.delete(id))
-			Log.i("---------------Fish deleted");
+			Log.i("Fish Info deleted From DB");
 		else
-			Log.i("---------------delete Failed");
+			Log.i("Fish info deleted fail From DB");
 
+		String folder_path = request.getSession().getServletContext().getRealPath("/") + "resources/fish_img/";
+		String imagePath = folder_path + filename;
+		Log.i("Image Path  : " + imagePath);
+		File file = new File(imagePath);
+
+		if (file.exists()) {
+			if (file.delete())
+				Log.i("Fish Image deleted");
+			else
+				Log.i("Fish Image delete Failed");
+		}
 		return "deleteFish";
 	}
 
@@ -166,8 +178,7 @@ public class FishController {
 		Log.line();
 
 		Log.i("/showFishsforRank In Period By Species");
-		Log.i("st_time= " + st_time + "\t" + "end_time= " + end_time + "\t" + "Species= "
-				+ species);
+		Log.i("st_time= " + st_time + "\t" + "end_time= " + end_time + "\t" + "Species= " + species);
 
 		/**
 		 * get FISH LIST from Data base/////////////////////
