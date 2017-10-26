@@ -2,6 +2,7 @@ package com.example.changoo.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -14,6 +15,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.example.changoo.log.Log;
@@ -37,9 +39,9 @@ public class FishController {
 		Log.i("/saveFish");
 		Log.i(fish.toString());
 		
-		String 		date	 = fish.getDate();
-		String[]	dateDiv  = date.split("/");
-		String 		newDate  = dateDiv[0].trim()+ "/" + dateDiv[1].trim() + "/" + dateDiv[2].trim();
+		String date	 		= fish.getDate();
+		String dateDiv[] 	= date.split("/");
+		String newDate 		= dateDiv[0].trim()+ "/" + dateDiv[1].trim() + "/" + dateDiv[2].trim();
 		
 		Log.i(newDate);
 		fish.setDate(newDate);
@@ -99,8 +101,9 @@ public class FishController {
 		Log.i("........File Saved");
 	}
 
-	@RequestMapping(value = "/showFishsByID", params = "fishname=null", method = { RequestMethod.GET, RequestMethod.POST })
-	public String login(Model model, User user) {
+	@ResponseBody
+	@RequestMapping(value = "/showFishsByID", params = "!fishname", method = { RequestMethod.GET, RequestMethod.POST })
+	public HashMap<String, Object> showFishsByID(User user) {
 		Log.line();
 		Log.i("/showFishsByID");
 
@@ -131,13 +134,16 @@ public class FishController {
 		}
 
 		message.put("fishs", fishs);
-		model.addAttribute("message", message);
+		
+		HashMap<String, Object> map = new HashMap<>();
+		map.put("message", message);
 
-		return "showFishsByID";
+		return map;
 	}
 
-	@RequestMapping(value = "/showFishsByID", params = "fishname!=null", method = { RequestMethod.GET, RequestMethod.POST })
-	public String login(Model model, User user, String fishname) {
+	@ResponseBody
+	@RequestMapping(value = "/showFishsByID", params = "fishname", method = { RequestMethod.GET, RequestMethod.POST })
+	public HashMap<String, Object> showFishsByID(User user, String fishname) {
 		Log.line();
 		Log.i("/showFishsByID and Fishname");
 
@@ -155,9 +161,9 @@ public class FishController {
 
 		Log.i("get Fish By Id and FishName From DataBase");
 
-		JSONObject message = new JSONObject();
-		JSONArray fishArray = new JSONArray();
-		JSONObject fishObject = new JSONObject();
+		JSONObject 	message 	= new JSONObject();
+		JSONArray 	fishArray 	= new JSONArray();
+		JSONObject 	fishObject 	= new JSONObject();
 
 		if (fishs != null) {
 			for (int i = 0; i < fishs.size(); i++) {
@@ -167,13 +173,15 @@ public class FishController {
 		}
 
 		message.put("fishs", fishs);
-		model.addAttribute("message", message);
+		HashMap<String, Object> map = new HashMap<>();
+		map.put("message", message);
 
-		return "showFishsByID";
+		return map;
 	}
 
-	@RequestMapping(value = "/showFishsforRank", params = "species!=null", method = { RequestMethod.GET, RequestMethod.POST })
-	public String showFishsforRank(Model model, String species, String st_time, String end_time) {
+	@ResponseBody
+	@RequestMapping(value = "/showFishsforRank", params = "species", method = { RequestMethod.GET, RequestMethod.POST })
+	public String showFishsforRank(String species, String st_time, String end_time) {
 		Log.line();
 
 		Log.i("/showFishsforRank In Period By Species");
@@ -189,26 +197,27 @@ public class FishController {
 
 		Log.i("get Species Fish From DataBase" + species);
 
-		JSONObject rank_message 	= new JSONObject();
-		JSONArray rank_fishArray 	= new JSONArray();
-		JSONObject rank_fishObject 	= new JSONObject();
+		JSONObject 	rankMessage 	= new JSONObject();
+		JSONArray 	rankFishArray 	= new JSONArray();
+		JSONObject 	rankFishObject 	= new JSONObject();
 
 		if (fishs != null) {
 			for (int i = 0; i < fishs.size(); i++) {
 				Fish fish = fishs.get(i);
-				rank_fishArray.add(i, fish);
+				rankFishArray.add(i, fish);
 			}
 		}
 
-		rank_message.put("fishs", fishs);
-		model.addAttribute("message", rank_message);
+		rankMessage.put("fishs", fishs);
+		HashMap<String, Object> map = new HashMap<>();
+		map.put("message", rankMessage);
 
 		return "showFishsBySpecies";
 	}
 
-	@RequestMapping(value = "/showFishsforRank", params = "species=null", method = { RequestMethod.GET,
-			RequestMethod.POST })
-	public String showFishsforRank(Model model, String st_time, String end_time) {
+	@ResponseBody
+	@RequestMapping(value = "/showFishsforRank", params = "!species", method = { RequestMethod.GET, RequestMethod.POST })
+	public HashMap<String, Object> showFishsforRank(String st_time, String end_time) {
 		Log.line();
 		Log.i("/showFishsforRank In Period");
 		Log.i("st_time=" + st_time + "\t" + "end_time=" + end_time);
@@ -223,21 +232,22 @@ public class FishController {
 
 		Log.i("All Species Fish From DataBase");
 
-		JSONObject all_rank_message = new JSONObject();
-		JSONArray all_rank_fishArray = new JSONArray();
-		JSONObject all_rank_fishObject = new JSONObject();
+		JSONObject 	allRankMessage 		= new JSONObject();
+		JSONArray 	allRankFishArray 	= new JSONArray();
+		JSONObject 	allRankFishObject 	= new JSONObject();
 
 		if (fishs != null) {
 			for (int i = 0; i < fishs.size(); i++) {
 				Fish fish = fishs.get(i);
-				all_rank_fishArray.add(i, fish);
+				allRankFishArray.add(i, fish);
 			}
 		}
 
-		all_rank_message.put("fishs", fishs);
-		model.addAttribute("message", all_rank_message);
+		allRankMessage.put("fishs", fishs);
+		HashMap<String, Object> map = new HashMap<>();
+		map.put("message", allRankMessage);
 
-		return "showFishs";
+		return map;
 	}
 
 }
