@@ -24,7 +24,7 @@ public class UserDAO {
 	}
 
 	public User getUser(String id) {
-		String str = "select * from users where id=?";
+		String str = "SELECT * FROM users WHERE id = ?";
 		try {
 			return jdbcTemplate.queryForObject(str, new Object[] { id }, new UserMapper());
 		} catch (EmptyResultDataAccessException e) {
@@ -33,14 +33,14 @@ public class UserDAO {
 	}
 
 	public boolean insert(User user) {
-		String sql = "insert into users (id, password, name, gender,phonenumber,birth,imgFile) values(?,?,?,?,?,?,?)";
-		String id = user.getId();
-		String password = user.getPassword();
-		String name = user.getName();
-		String gender = user.getGender();
-		String phoneNumber = user.getPhoneNumber();
-		String birth = user.getBirth();
-		String imgFile = user.getImageFile();
+		String sql = "INSERT INTO users (id, password, name, gender, phonenumber, birth, imgFile) VALUES(?,?,?,?,?,?,?)";
+		String id 			= user.getId();
+		String password 	= user.getPassword();
+		String name 		= user.getName();
+		String gender 		= user.getGender();
+		String phoneNumber 	= user.getPhoneNumber();
+		String birth 		= user.getBirth();
+		String imgFile 		= user.getImageFile();
 		return jdbcTemplate.update(sql, new Object[] { id, password, name, gender, phoneNumber, birth, imgFile }) == 1;
 	}
 
@@ -62,12 +62,12 @@ public class UserDAO {
 
 	public boolean setUser(User user) {
 		
-		String id = user.getId();
-		String password = user.getPassword();
-		String name = user.getName();
-		String phoneNumber = user.getPhoneNumber();
-		String birth = user.getBirth();
-		String imgFile = user.getImageFile();
+		String id 			= user.getId();
+		String password 	= user.getPassword();
+		String name 		= user.getName();
+		String phoneNumber 	= user.getPhoneNumber();
+		String birth 		= user.getBirth();
+		String imgFile 		= user.getImageFile();
 		
 		return jdbcTemplate.update("UPDATE USERS"
                 + " SET password = ?," 
@@ -76,7 +76,7 @@ public class UserDAO {
                 + "phoneNumber = ?,"
 				+ "imgFile = ?"
                 + " WHERE id = ? ",
-                new Object[] {password,name,birth,phoneNumber,imgFile,id})==1;
+                new Object[] {password, name, birth, phoneNumber, imgFile, id}) == 1;
 	}
 }
 	

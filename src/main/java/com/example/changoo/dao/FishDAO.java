@@ -23,47 +23,47 @@ public class FishDAO {
 	}
 
 	public List<Fish> getFishsByID(String user_id) {
-		String str = "select * from fishs where user_id=? order by name ASC";
+		String str = "SELECT * FROM fishs WHERE user_id = ? ORDER BY name ASC";
 		return jdbcTemplate.query(str, new Object[] { user_id }, new FishMapper());
 	}
 
 	public List<Fish> getFishsByIDAndFishName(String user_id, String fishname) {
-		String str = "select * from fishs where user_id=? and name like ? order by name ASC";
+		String str = "SELECT * FROM fishs WHERE user_id = ? AND name like ? ORDER BY name ASC";
 		return jdbcTemplate.query(str, new Object[] { user_id, "%" + fishname + "%" }, new FishMapper());
 	}
 
 	public List<Fish> getFishsInPeriod(String st_time, String end_time) {
-		String str = "select * from fishs where date between ? and ? order by name ASC";
+		String str = "SELECT * FROM fishs WHERE date BETWEEN ? AND ? ORDER BY name ASC";
 		return jdbcTemplate.query(str, new Object[] { st_time, end_time }, new FishMapper());
 	}
 
 	public List<Fish> getFishsInPeriodBySpecies(String species, String st_time, String end_time) {
-		String str = "select * from fishs where species like ? and date between ? and ? order by name ASC";
+		String str = "SELECT * FROM fishs WHERE species like ? AND date BETWEEN ? AND ? ORDER BY name ASC";
 		return jdbcTemplate.query(str, new Object[] { "%" + species + "%", st_time, end_time }, new FishMapper());
 	}
 
 	public boolean insert(Fish fish) {
-		String sql = "insert into fishs(id,user_id,name,species,imgFile,maxFower,avgFower,date,time,timeing,GPS_lat,Gps_lot)"
-				+ " value (?,?,?,?,?,?,?,?,?,?,?,?);";
-		String id = fish.getId();
-		String user_id = fish.getUser_id();
-		String name = fish.getName();
-		String species = fish.getSpecies();
-		String imgFile = fish.getImageFile();
+		String sql = "INSERT INTO fishs(id, user_id,name, species, imgFile, maxFower, avgFower, date, time, timeing, GPS_lat, Gps_lot)"
+				+ " VALUE (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
+		
+		String id 		= fish.getId();
+		String user_id 	= fish.getUser_id();
+		String name 	= fish.getName();
+		String species	= fish.getSpecies();
+		String imgFile 	= fish.getImageFile();
 		Double maxFower = fish.getMaxFower();
 		Double avgFower = fish.getAvgFower();
-		String date = fish.getDate();
-		String time = fish.getTime();
+		String date 	= fish.getDate();
+		String time 	= fish.getTime();
 		Integer timeing = fish.getTimeing();
-		Double GPS_lat = fish.getGPS_lat();
-		Double Gps_lot = fish.getGPS_lot();
+		Double GPS_lat 	= fish.getGPS_lat();
+		Double Gps_lot 	= fish.getGPS_lot();
 
-		return jdbcTemplate.update(sql, new Object[] { id, user_id, name, species, imgFile, maxFower, avgFower, date,
-				time, timeing, GPS_lat, Gps_lot }) == 1;
+		return jdbcTemplate.update(sql, new Object[] { id, user_id, name, species, imgFile, maxFower, avgFower, date, time, timeing, GPS_lat, Gps_lot }) == 1;
 	}
 	
 	public boolean delete(String id) {
-		String sql = "delete from fishs where id=?"; 
+		String sql = "DELETE FROM fishs WHERE id = ?"; 
 		return jdbcTemplate.update(sql, new Object[] { id }) == 1;
 	}
 
