@@ -2,6 +2,7 @@ package com.example.changoo.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -12,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.example.changoo.httpConnect.Protocol;
@@ -29,13 +31,15 @@ public class UserContoller {
 		this.userService = userService;
 	}
 
+	@ResponseBody
 	@RequestMapping(value = "/login", method = { RequestMethod.POST, RequestMethod.GET })
-	public String login(Model model, User user) {
+	public HashMap<String, Object> login(User user) {
 		Log.line();
 		Log.i("/login");
 
 		String id = user.getId();
 		String password = user.getPassword();
+		
 		Log.i("User input");
 		Log.i("ID : " + id);
 		Log.i("PW : " + password);
@@ -50,10 +54,8 @@ public class UserContoller {
 
 		User userFromDB = userService.getUser(id);
 		if (userFromDB == null) {
-
 			Log.i("ID : " + id + "   DB don't have ID");
 			message.put(Protocol.CHECKING_USER, Protocol.USER_NOK);
-
 		}
 
 		else {
@@ -65,8 +67,8 @@ public class UserContoller {
 				Log.i("PhoneNumber : " + userFromDB.getPhoneNumber());
 				Log.i("Birth : " + userFromDB.getBirth());
 				Log.i("ImgFile : " + userFromDB.getImageFile());
+				
 				message.put(Protocol.CHECKING_USER, Protocol.USER_OK);
-
 				message.put("user", userFromDB);
 			} else {
 				Log.i("ID : " + id + "   DB have ID but PASSWORD is wrong");
@@ -76,13 +78,15 @@ public class UserContoller {
 
 		///////////////////////////////////////////////////////////
 
-		model.addAttribute("message", message);
+		HashMap<String, Object> map = new HashMap<>();
+		map.put("message", message);
 
-		return "login";
+		return map;
 	}
 
+	@ResponseBody
 	@RequestMapping(value = "/saveUser", method = { RequestMethod.GET, RequestMethod.POST })
-	public String saveUser(Model model, User user) {
+	public HashMap<String, Object> saveUser(Model model, User user) {
 		
 		String id = user.getId();
 		String password = user.getPassword();
@@ -99,7 +103,8 @@ public class UserContoller {
 		Log.i("PHONENUMBER " + phonenumber);
 
 		/**
-		 * CHECKING Data base///////////////////// NOK == USER ALREADY EXISTS
+		 * CHECKING Data base/////////////////////
+		 * NOK == USER ALREADY EXISTS
 		 * OK== USER ENROLL SUCCESS
 		 */
 
@@ -115,18 +120,24 @@ public class UserContoller {
 			if(userService.setUser(user))
 				message.put(Protocol.CHECKING_USER, Protocol.JOIN_OK);
 		}
-
-		model.addAttribute("message", message);
-
-		return "saveUser";
+		
+		HashMap<String, Object> map = new HashMap<>();
+		map.put("message", message);
+		
+		return map;
 
 	}
 	
+	@ResponseBody
 	@RequestMapping(value = "/join", method = { RequestMethod.GET, RequestMethod.POST })
-	public String join(Model model, User user) {
+	public HashMap<String, Object> join(Model model, User user) {
 		JSONObject message = new JSONObject();
+		
 		message.put(Protocol.CHECKING_USER, Protocol.JOIN_OK);
-		model.addAttribute("message", message);
+		HashMap<String, Object> map = new HashMap<>();
+		map.put("message", message);
+		
+		return map;
 		
 //		String id = user.getId();
 //		String password = user.getPassword();
@@ -167,13 +178,10 @@ public class UserContoller {
 //
 //		model.addAttribute("message", message);
 
-		return "login";
-
 	}
 
 	@RequestMapping(value = "/saveUserImage", method = { RequestMethod.GET, RequestMethod.POST })
-	public String saveFishImage(Model model, String id, String filename,
-			@RequestParam("image") MultipartFile multipartFile, HttpServletRequest request) {
+	public void saveFishImage(String id, String filename, @RequestParam("image") MultipartFile multipartFile, HttpServletRequest request) {
 		Log.line();
 		Log.i("/saveFishImage");
 		Log.i("ID : " + id);
@@ -181,21 +189,20 @@ public class UserContoller {
 		Log.i("FILESIZE  :" + multipartFile.getSize());
 		Log.i("Save File.........");
 
-		String folder_path = request.getSession().getServletContext().getRealPath("/") + "resources/user_img/";
-		String imagePath = folder_path + filename;
+		String folder_path 	= request.getSession().getServletContext().getRealPath("/") + "resources/user_img/";
+		String imagePath 	= folder_path + filename;
 
 		Log.i("Image Path  : " + imagePath);
+		
 		File file = new File(imagePath);
 
 		try {
 			multipartFile.transferTo(file);
 		} catch (IllegalStateException | IOException e) {
 			Log.e(e.getMessage());
-			return null;
 		}
 
 		Log.i("........File Saved");
 
-		return "saveUserImage";
 	}
 }
