@@ -20,8 +20,9 @@ public class FishService {
 	public List<Fish> getFishsByID(String user_id) {
 		return fishDAO.getFishsByID(user_id);
 	}
-	public List<Fish> getFishsByIDAndFishName(String user_id,String fishname) {
-		return fishDAO.getFishsByIDAndFishName(user_id,fishname);
+
+	public List<Fish> getFishsByIDAndFishName(String user_id, String fishname) {
+		return fishDAO.getFishsByIDAndFishName(user_id, fishname);
 	}
 
 	public List<Fish> getFishsInPeriod(String st_time, String end_time) {
@@ -35,8 +36,8 @@ public class FishService {
 	public boolean insert(Fish fish) {
 		return fishDAO.insert(fish);
 	}
-	
+
 	public boolean delete(String id) {
 		return fishDAO.delete(id);
-}
+	}
 }

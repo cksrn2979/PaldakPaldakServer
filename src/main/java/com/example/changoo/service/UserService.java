@@ -18,7 +18,7 @@ public class UserService {
 	public User getUser(String id) {
 		return userDAO.getUser(id);
 	}
-	
+
 	public boolean insert(User user) {
 		return userDAO.insert(user);
 	}
@@ -27,5 +27,4 @@ public class UserService {
 		return userDAO.setUser(user);
 	}
 
-	
 }
