@@ -32,47 +32,49 @@ public class FishController {
 	}
 
 	@RequestMapping(value = "/saveFish", method = { RequestMethod.GET, RequestMethod.POST })
-	public String saveFish(Model model, Fish fish) {
+	public void saveFish(Model model, Fish fish) {
 		Log.line();
 		Log.i("/saveFish");
 		Log.i(fish.toString());
+		
+		String 		date	 = fish.getDate();
+		String[]	dateDiv  = date.split("/");
+		String 		newDate  = dateDiv[0].trim()+ "/" + dateDiv[1].trim() + "/" + dateDiv[2].trim();
+		
+		Log.i(newDate);
+		fish.setDate(newDate);
+		
 		Log.i("Insert Fish -------------------------");
-		if (fishService.insert(fish))
-			Log.i("---------------Fish inserted");
-		else
-			Log.i("---------------insert Failed");
-
-		return "saveFish";
+		if (fishService.insert(fish)){ Log.i("---------------Fish inserted");}
+		else { Log.i("---------------insert Failed"); }
 	}
 
 	@RequestMapping(value = "/deleteFish", method = { RequestMethod.GET, RequestMethod.POST })
-	public String deleteFish(Model model, String id, String filename, HttpServletRequest request) {
+	public void deleteFish(Model model, String id, String filename, HttpServletRequest request) {
 		Log.line();
 		Log.i("/deleteFish");
 		Log.i("id: " + id);
 		Log.i("FILENAME : " + filename);
 		Log.i("Delete Fish -------------------------");
-		if (fishService.delete(id))
-			Log.i("Fish Info deleted From DB");
-		else
-			Log.i("Fish info deleted fail From DB");
+		
+		if (fishService.delete(id)) { Log.i("Fish Info deleted From DB"); }
+		else { Log.i("Fish info deleted fail From DB"); }
 
-		String folder_path = request.getSession().getServletContext().getRealPath("/") + "resources/fish_img/";
-		String imagePath = folder_path + filename;
+		String folderPath 	= request.getSession().getServletContext().getRealPath("/") + "resources/fish_img/";
+		String imagePath 	= folderPath + filename;
+		
 		Log.i("Image Path  : " + imagePath);
+		
 		File file = new File(imagePath);
 
 		if (file.exists()) {
-			if (file.delete())
-				Log.i("Fish Image deleted");
-			else
-				Log.i("Fish Image delete Failed");
+			if (file.delete()) { Log.i("Fish Image deleted"); }
+			else { Log.i("Fish Image delete Failed"); }
 		}
-		return "deleteFish";
 	}
 
 	@RequestMapping(value = "/saveFishImage", method = { RequestMethod.GET, RequestMethod.POST })
-	public String saveFishImage(Model model, String id, String filename,
+	public void saveFishImage(Model model, String id, String filename,
 			@RequestParam("image") MultipartFile multipartFile, HttpServletRequest request) {
 		Log.line();
 		Log.i("/saveFishImage");
@@ -81,26 +83,23 @@ public class FishController {
 		Log.i("FILESIZE  :" + multipartFile.getSize());
 		Log.i("Save File.........");
 
-		String folder_path = request.getSession().getServletContext().getRealPath("/") + "resources/fish_img/";
-		String imagePath = folder_path + filename;
+		String folderPath 	= request.getSession().getServletContext().getRealPath("/") + "resources/fish_img/";
+		String imagePath 	= folderPath + filename;
 
 		Log.i("Image Path  : " + imagePath);
+		
 		File file = new File(imagePath);
 
 		try {
 			multipartFile.transferTo(file);
 		} catch (IllegalStateException | IOException e) {
 			Log.e(e.getMessage());
-			return null;
 		}
 
 		Log.i("........File Saved");
-
-		return "saveFishImage";
 	}
 
-	@RequestMapping(value = "/showFishsByID", params = "fishname=null", method = { RequestMethod.GET,
-			RequestMethod.POST })
+	@RequestMapping(value = "/showFishsByID", params = "fishname=null", method = { RequestMethod.GET, RequestMethod.POST })
 	public String login(Model model, User user) {
 		Log.line();
 		Log.i("/showFishsByID");
@@ -118,13 +117,15 @@ public class FishController {
 
 		Log.i("get Fish By Id From DataBase");
 
-		JSONObject message = new JSONObject();
-		JSONArray fishArray = new JSONArray();
-		JSONObject fishObject = new JSONObject();
+		JSONObject 	message 	= new JSONObject();
+		JSONArray 	fishArray 	= new JSONArray();
+		JSONObject 	fishObject 	= new JSONObject();
 
 		if (fishs != null) {
-			for (int i = 0; i < fishs.size(); i++) {
-				Fish fish = fishs.get(i);
+			Fish fish 	= null;
+			int size	= fishs.size();
+			for (int i = 0; i < size; i++) {
+				fish = fishs.get(i);
 				fishArray.add(i, fish);
 			}
 		}
@@ -135,8 +136,7 @@ public class FishController {
 		return "showFishsByID";
 	}
 
-	@RequestMapping(value = "/showFishsByID", params = "fishname!=null", method = { RequestMethod.GET,
-			RequestMethod.POST })
+	@RequestMapping(value = "/showFishsByID", params = "fishname!=null", method = { RequestMethod.GET, RequestMethod.POST })
 	public String login(Model model, User user, String fishname) {
 		Log.line();
 		Log.i("/showFishsByID and Fishname");
@@ -172,8 +172,7 @@ public class FishController {
 		return "showFishsByID";
 	}
 
-	@RequestMapping(value = "/showFishsforRank", params = "species!=null", method = { RequestMethod.GET,
-			RequestMethod.POST })
+	@RequestMapping(value = "/showFishsforRank", params = "species!=null", method = { RequestMethod.GET, RequestMethod.POST })
 	public String showFishsforRank(Model model, String species, String st_time, String end_time) {
 		Log.line();
 
@@ -190,9 +189,9 @@ public class FishController {
 
 		Log.i("get Species Fish From DataBase" + species);
 
-		JSONObject rank_message = new JSONObject();
-		JSONArray rank_fishArray = new JSONArray();
-		JSONObject rank_fishObject = new JSONObject();
+		JSONObject rank_message 	= new JSONObject();
+		JSONArray rank_fishArray 	= new JSONArray();
+		JSONObject rank_fishObject 	= new JSONObject();
 
 		if (fishs != null) {
 			for (int i = 0; i < fishs.size(); i++) {
